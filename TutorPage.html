@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>School Tutor Hub</title>
+  <title>BCS TutorHub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -34,6 +34,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .logo {
@@ -45,6 +48,7 @@
     nav {
       display: flex;
       gap: 12px;
+      flex-wrap: wrap;
     }
 
     nav button {
@@ -71,7 +75,7 @@
 
     .section {
       display: none;
-      animation: fade 0.3s ease-in-out;
+      animation: fade 0.25s ease-in-out;
     }
 
     .section.active {
@@ -92,7 +96,7 @@
       margin-bottom: 20px;
     }
 
-    h1, h2 {
+    h1, h2, h3 {
       margin-top: 0;
     }
 
@@ -101,11 +105,6 @@
       grid-template-columns: 1fr 1fr;
       gap: 24px;
       align-items: center;
-    }
-
-    .hero h1 {
-      font-size: 32px;
-      margin-bottom: 12px;
     }
 
     .cta {
@@ -135,10 +134,6 @@
       gap: 16px;
     }
 
-    .tutor-card h3 {
-      margin-bottom: 4px;
-    }
-
     .badge {
       display: inline-block;
       background: #fff2e6;
@@ -150,17 +145,59 @@
       margin-right: 6px;
     }
 
-    input, select, textarea {
+    .stars {
+      color: var(--orange);
+      letter-spacing: 1px;
+      font-size: 16px;
+      margin: 6px 0;
+    }
+
+    .review-count {
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      max-width: 500px;
+      width: 90%;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .review {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+    }
+
+    .close-btn {
+      float: right;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    input, textarea {
       width: 100%;
       padding: 10px;
       border-radius: 8px;
       border: 1px solid var(--border);
       margin-bottom: 12px;
-      font-size: 14px;
-    }
-
-    .muted {
-      color: var(--muted);
       font-size: 14px;
     }
 
@@ -170,12 +207,18 @@
       color: var(--muted);
       font-size: 14px;
     }
+
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">TutorHub</div>
+  <div class="logo">BCS TutorHub</div>
   <nav>
     <button class="active" onclick="showTab('home', this)">Home</button>
     <button onclick="showTab('browse', this)">Browse Tutors</button>
@@ -186,11 +229,14 @@
 </header>
 
 <main>
+  <!-- HOME -->
   <section id="home" class="section active">
     <div class="card hero">
       <div>
         <h1>Find the Right Tutor. Faster.</h1>
-        <p class="muted">Connect with student tutors, schedule sessions, and track your learning progress — all in one place.</p>
+        <p style="color: var(--muted)">
+          Connect with students at Berlin Community School for fast, friendly, peer tutoring.
+        </p>
         <div class="cta">
           <button class="btn" onclick="showTab('browse')">Browse Tutors</button>
           <button class="btn" style="margin-left: 8px" onclick="showTab('become')">Become a Tutor</button>
@@ -198,54 +244,94 @@
       </div>
       <div class="card">
         <h3>How It Works</h3>
-        <p class="muted">1. Browse tutors by subject<br>
+        <p style="color: var(--muted)">
+          1. Find a tutor by subject<br>
           2. Book a session<br>
-          3. Get help & track progress</p>
+          3. Learn better, together
+        </p>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top: 24px;">
+      <div class="card">
+        <h3>Why Use BCS TutorHub?</h3>
+        <p style="color: var(--muted)">
+          Students learn best from students. Get quick help, flexible scheduling,
+          and support from people who understand your classes.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Community Stats</h3>
+        <p style="color: var(--muted)">
+          👥 42 Active Tutors<br>
+          📚 120 Sessions Completed<br>
+          ⭐ 4.8 Average Rating
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Safe & School-Run</h3>
+        <p style="color: var(--muted)">
+          All tutors are BCS students. Profiles are reviewed and approved by staff.
+        </p>
       </div>
     </div>
   </section>
 
+  <!-- BROWSE -->
   <section id="browse" class="section">
     <h2>Browse Tutors</h2>
     <div class="grid">
-      <div class="card tutor-card">
+      <div class="card">
         <h3>Alex Johnson</h3>
+        <div class="stars">★★★★★</div>
+        <span class="review-count" onclick="openReviews('alex')">3 reviews</span>
+        <br><br>
         <span class="badge">Math</span>
         <span class="badge">Physics</span>
-        <p class="muted">Available Mon–Thu</p>
+        <p style="color: var(--muted)">Available Mon–Thu</p>
         <button class="btn">Book Session</button>
       </div>
 
-      <div class="card tutor-card">
+      <div class="card">
         <h3>Sophia Lee</h3>
+        <div class="stars">★★★★☆</div>
+        <span class="review-count" onclick="openReviews('sophia')">2 reviews</span>
+        <br><br>
         <span class="badge">English</span>
         <span class="badge">History</span>
-        <p class="muted">Available Weekends</p>
+        <p style="color: var(--muted)">Available Weekends</p>
         <button class="btn">Book Session</button>
       </div>
 
-      <div class="card tutor-card">
+      <div class="card">
         <h3>Michael Rivera</h3>
+        <div class="stars">★★★★★</div>
+        <span class="review-count" onclick="openReviews('michael')">1 review</span>
+        <br><br>
         <span class="badge">Chemistry</span>
         <span class="badge">Biology</span>
-        <p class="muted">Available Tue–Fri</p>
+        <p style="color: var(--muted)">Available Tue–Fri</p>
         <button class="btn">Book Session</button>
       </div>
     </div>
   </section>
 
+  <!-- PAST -->
   <section id="past" class="section">
     <h2>Past Tutoring</h2>
     <div class="card">
-      <p><strong>Math with Alex Johnson</strong></p>
-      <p class="muted">Completed on Feb 2, 2026</p>
+      <strong>Math with Alex Johnson</strong>
+      <p style="color: var(--muted)">Completed on Feb 2, 2026</p>
     </div>
     <div class="card">
-      <p><strong>English with Sophia Lee</strong></p>
-      <p class="muted">Completed on Jan 20, 2026</p>
+      <strong>English with Sophia Lee</strong>
+      <p style="color: var(--muted)">Completed on Jan 20, 2026</p>
     </div>
   </section>
 
+  <!-- BECOME -->
   <section id="become" class="section">
     <h2>Become a Tutor</h2>
     <div class="card">
@@ -256,6 +342,7 @@
     </div>
   </section>
 
+  <!-- PROFILE -->
   <section id="profile" class="section">
     <h2>Your Profile</h2>
     <div class="card">
@@ -268,8 +355,17 @@
 </main>
 
 <footer>
-  © 2026 TutorHub • Built for students
+  © 2026 BCS TutorHub • Built for Berlin Community School
 </footer>
+
+<!-- REVIEW MODAL -->
+<div id="reviewModal" class="modal" onclick="closeReviews(event)">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeReviews(event)">✕</span>
+    <h3 id="reviewTitle"></h3>
+    <div id="reviewBody"></div>
+  </div>
+</div>
 
 <script>
   function showTab(id, btn) {
@@ -278,6 +374,52 @@
 
     document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
+  }
+
+  const reviews = {
+    alex: {
+      name: "Alex Johnson",
+      items: [
+        { name: "Emily", text: "Explained calculus in a way that finally made sense!" },
+        { name: "Ryan", text: "Really patient and helpful with physics homework." },
+        { name: "Maya", text: "Helped me go from a C to a B+ in math." }
+      ]
+    },
+    sophia: {
+      name: "Sophia Lee",
+      items: [
+        { name: "Jordan", text: "Super helpful with essay structure." },
+        { name: "Ava", text: "Helped me prep for my history test!" }
+      ]
+    },
+    michael: {
+      name: "Michael Rivera",
+      items: [
+        { name: "Chris", text: "Made chemistry way less confusing." }
+      ]
+    }
+  };
+
+  function openReviews(id) {
+    const modal = document.getElementById("reviewModal");
+    const title = document.getElementById("reviewTitle");
+    const body = document.getElementById("reviewBody");
+
+    title.innerText = reviews[id].name + " – Reviews";
+    body.innerHTML = reviews[id].items.map(r => `
+      <div class="review">
+        <strong>${r.name}</strong>
+        <p style="color: var(--muted)">${r.text}</p>
+      </div>
+    `).join("");
+
+    modal.classList.add("active");
+  }
+
+  function closeReviews(e) {
+    if (e.target.id === "reviewModal" || e.target.classList.contains("close-btn")) {
+      document.getElementById("reviewModal").classList.remove("active");
+    }
   }
 </script>
 
