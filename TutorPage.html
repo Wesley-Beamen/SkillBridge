@@ -1,208 +1,193 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Schedule – Beamen Landscaping</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: url(pexels-photo-1001676.jpeg) no-repeat center center/cover;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .form-card {
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 420px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .step {
-      display: none;
-      animation: slideIn 0.5s ease forwards;
-    }
-
-    .step.active {
-      display: block;
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateX(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    h2 {
-      margin-bottom: 15px;
-    }
-
-    .services {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 20px 0;
-    }
-
-    .service {
-      padding: 14px;
-      border-radius: 12px;
-      background: #eee;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      font-weight: bold;
-    }
-
-    .service.active {
-      background: #c5f0d2;
-      border: 2px solid #2e8b57;
-    }
-
-    /* 🌿 Mowing = bubbles */
-    .service.mowing::after {
-      content: "🫧";
-      position: absolute;
-      right: 8px;
-      bottom: 5px;
-      animation: float 2s infinite ease-in-out;
-    }
-
-    /* ✂️ Trimming = leaves */
-    .service.trimming::after {
-      content: "🍃";
-      position: absolute;
-      right: 8px;
-      bottom: 5px;
-      animation: float 1.8s infinite ease-in-out;
-    }
-
-    /* 🌱 Edging */
-    .service.edging::after {
-      content: "🌱";
-      position: absolute;
-      right: 8px;
-      bottom: 5px;
-      animation: float 2.3s infinite ease-in-out;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0); }
-    }
-
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      background: #2e8b57;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background: #246b43;
-    }
-
-    .range-value {
-      margin-top: 10px;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-
-<div class="form-card">
-
-  <!-- STEP 1 -->
-  <div class="step active">
-    <h2>👋 What’s your name?</h2>
-    <input type="text" id="name" placeholder="Your name" />
-    <button onclick="nextStep()">Next →</button>
-  </div>
-
-  <!-- STEP 2 -->
-  <div class="step">
-    <h2>📍 Where is your property?</h2>
-    <input type="text" id="address" placeholder="Address" />
-    <button onclick="nextStep()">Next →</button>
-  </div>
-
-  <!-- STEP 3 -->
-  <div class="step">
-    <h2>🛠 What services do you want?</h2>
-
-    <div class="services">
-      <div class="service mowing" onclick="toggleService(this)">Mowing</div>
-      <div class="service trimming" onclick="toggleService(this)">Trimming</div>
-      <div class="service edging" onclick="toggleService(this)">Edging</div>
-      <div class="service weeding" onclick="toggleService(this)">Weeding</div>
+<!-- BECOME -->
+<section id="become" class="section">
+  <h2>Become a Tutor</h2>
+  <div class="card interview-card">
+    <div id="interview-container">
+      <div id="question-step"></div>
+      <div id="response-area"></div>
     </div>
-
-    <button onclick="nextStep()">Next →</button>
   </div>
-
-  <!-- STEP 4 -->
-  <div class="step">
-    <h2>📏 How big is your yard?</h2>
-    <input type="range" min="1" max="10" value="5" id="yardSize" oninput="updateRange()" />
-    <div class="range-value" id="rangeValue">Medium</div>
-    <button onclick="nextStep()">Next →</button>
-  </div>
-
-  <!-- STEP 5 -->
-  <div class="step">
-    <h2>🎉 You’re all set!</h2>
-    <p>We’ll contact you soon to confirm your appointment.</p>
-    <button onclick="alert('Form submitted!')">Submit</button>
-  </div>
-
-</div>
-
+</section>
+<style>
+  .interview-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .interview-question {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.5s ease-out;
+  }
+  .interview-input {
+    padding: 10px 14px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid var(--orange);
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 10px;
+    transition: box-shadow 0.2s ease;
+  }
+  .interview-input:focus {
+    box-shadow: 0 0 10px rgba(255, 122, 24, 0.3);
+  }
+  .slider-value {
+    font-weight: bold;
+    color: var(--orange);
+  }
+  .subject-bubble {
+    display: inline-block;
+    background: rgba(255,122,24,0.1);
+    border: 1px solid var(--orange);
+    border-radius: 999px;
+    padding: 8px 14px;
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .subject-bubble.selected {
+    background: var(--orange);
+    color: white;
+    transform: scale(1.1);
+  }
+  .animated-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .btn-next {
+    background: linear-gradient(135deg, #ff7a18, #ffb347);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
 <script>
-  let currentStep = 0;
-  const steps = document.querySelectorAll(".step");
-
+  // --- Animated conversational form flow ---
+  const steps = [
+    {
+      question: "Hi there! What’s your full name?",
+      type: "text",
+      placeholder: "Enter your full name",
+      key: "name"
+    },
+    {
+      question: "Awesome, nice to meet you! What grade range would you like to tutor?",
+      type: "slider",
+      min: 1,
+      max: 8,
+      key: "gradeRange"
+    },
+    {
+      question: "Which subjects can you tutor?",
+      type: "multi-select",
+      options: ["Math", "Science", "English", "History", "Spanish", "Art"],
+      key: "subjects"
+    },
+    {
+      question: "Tell us a little about your experience or why you’d be a great tutor:",
+      type: "textarea",
+      placeholder: "Write a short bio...",
+      key: "bio"
+    },
+    {
+      question: "All done! Ready to submit your application?",
+      type: "submit"
+    }
+  ];
+  let stepIndex = 0;
+  const formData = {};
+  const questionEl = document.getElementById("question-step");
+  const responseEl = document.getElementById("response-area");
+  function loadStep() {
+    const step = steps[stepIndex];
+    questionEl.innerHTML = `<div class="interview-question">${step.question}</div>`;
+    responseEl.innerHTML = "";
+    document.querySelectorAll(".animated-bg").forEach(e => e.remove());
+    if (step.type === "text") {
+      responseEl.innerHTML = `
+        <input class="interview-input" type="text" placeholder="${step.placeholder}" id="respValue">
+        <button class="btn-next" onclick="nextStep()">Next</button>
+      `;
+    } else if (step.type === "slider") {
+      responseEl.innerHTML = `
+        <input type="range" id="respSlider" min="${step.min}" max="${step.max}" value="4"
+          class="interview-input">
+        <div>Grade: <span class="slider-value" id="gradeDisplay">4</span></div>
+        <button class="btn-next" onclick="nextStep()">Next</button>
+      `;
+      document.getElementById("respSlider").addEventListener("input", e => {
+        document.getElementById("gradeDisplay").textContent = e.target.value;
+      });
+    } else if (step.type === "multi-select") {
+      step.options.forEach(sub => {
+        const div = document.createElement("div");
+        div.textContent = sub;
+        div.classList.add("subject-bubble");
+        div.onclick = () => {
+          div.classList.toggle("selected");
+          animateSubject(sub);
+        };
+        responseEl.appendChild(div);
+      });
+      responseEl.innerHTML += `<br><button class="btn-next" onclick="nextStep()">Next</button>`;
+    } else if (step.type === "textarea") {
+      responseEl.innerHTML = `
+        <textarea class="interview-input" rows="4" id="respValue" placeholder="${step.placeholder}"></textarea>
+        <button class="btn-next" onclick="nextStep()">Submit</button>
+      `;
+    } else if (step.type === "submit") {
+      responseEl.innerHTML = `<button class="btn-next" onclick="submitInterview()">Submit Application</button>`;
+    }
+  }
   function nextStep() {
-    steps[currentStep].classList.remove("active");
-    currentStep++;
-    steps[currentStep].classList.add("active");
+    const step = steps[stepIndex];
+    if (step.type === "text" || step.type === "textarea") {
+      formData[step.key] = document.getElementById("respValue").value.trim();
+    } else if (step.type === "slider") {
+      formData[step.key] = document.getElementById("respSlider").value;
+    } else if (step.type === "multi-select") {
+      formData[step.key] = Array.from(document.querySelectorAll(".subject-bubble.selected")).map(
+        el => el.textContent
+      );
+    }
+    if (stepIndex < steps.length - 1) {
+      stepIndex++;
+      loadStep();
+    }
   }
-
-  function toggleService(el) {
-    el.classList.toggle("active");
+  function animateSubject(subject) {
+    const bg = document.createElement("div");
+    bg.classList.add("animated-bg");
+    if (subject === "Science") {
+      bg.style.background = "radial-gradient(circle, rgba(180,0,255,0.3) 10%, transparent 70%)";
+      bg.style.animation = "none";
+    } else if (subject === "English") {
+      bg.style.background = "url('https://upload.wikimedia.org/wikipedia/commons/d/d2/Ink_pen_drawing.svg')";
+      bg.style.backgroundSize = "contain";
+      bg.style.backgroundRepeat = "no-repeat";
+      bg.style.backgroundPosition = "center";
+    } else if (subject === "Math") {
+      bg.style.background = "repeating-linear-gradient(45deg, rgba(255,122,24,0.1), rgba(255,122,24,0.2) 10px)";
+    }
+    document.querySelector(".interview-card").appendChild(bg);
   }
-
-  function updateRange() {
-    const val = document.getElementById("yardSize").value;
-    const label = document.getElementById("rangeValue");
-
-    if (val <= 3) label.textContent = "Small Yard 🌱";
-    else if (val <= 7) label.textContent = "Medium Yard 🌿";
-    else label.textContent = "Large Yard 🌳";
+  function submitInterview() {
+    questionEl.innerHTML = `<div class="interview-question">Thank you, ${formData.name || "Tutor"}! 🎉</div>`;
+    responseEl.innerHTML = `<p style="color: var(--muted)">Your application has been received. We'll review it soon!</p>`;
   }
+  loadStep();
 </script>
-
-</body>
-</html>
