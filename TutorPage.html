@@ -1,357 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>BCS TutorHub</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Schedule – Beamen Landscaping</title>
 
   <style>
-    :root {
-  --orange: #ff7a18;
-  --peach: #ffb347;
-  --bg: #fff7f0;
-  --card: #ffffff;
-  --text: #1f2933;
-  --muted: #6b7280;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: url(pexels-photo-1001676.jpeg) no-repeat center center/cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-* {
-  box-sizing: border-box;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-}
+    .form-card {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      text-align: center;
+      overflow: hidden;
+    }
 
-body {
-  margin: 0;
-  background: radial-gradient(circle at top, #fff2e6, #ffffff);
-  color: var(--text);
-}
+    .step {
+      display: none;
+      animation: slideIn 0.5s ease forwards;
+    }
 
-header {
-  backdrop-filter: blur(10px);
-  background: rgba(255, 122, 24, 0.85);
-  padding: 16px 24px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+    .step.active {
+      display: block;
+    }
 
-.logo {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-}
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
 
-nav {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+    h2 {
+      margin-bottom: 15px;
+    }
 
-nav button {
-  background: rgba(255,255,255,0.15);
-  border: none;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s ease;
-}
+    .services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 20px 0;
+    }
 
-nav button:hover,
-nav button.active {
-  background: white;
-  color: #ff7a18;
-  transform: translateY(-1px);
-}
+    .service {
+      padding: 14px;
+      border-radius: 12px;
+      background: #eee;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      font-weight: bold;
+    }
 
-main {
-  max-width: 1100px;
-  margin: 32px auto;
-  padding: 0 16px;
-}
+    .service.active {
+      background: #c5f0d2;
+      border: 2px solid #2e8b57;
+    }
 
-.section {
-  display: none;
-  animation: fade 0.3s ease-in-out;
-}
+    /* 🌿 Mowing = bubbles */
+    .service.mowing::after {
+      content: "🫧";
+      position: absolute;
+      right: 8px;
+      bottom: 5px;
+      animation: float 2s infinite ease-in-out;
+    }
 
-.section.active {
-  display: block;
-}
+    /* ✂️ Trimming = leaves */
+    .service.trimming::after {
+      content: "🍃";
+      position: absolute;
+      right: 8px;
+      bottom: 5px;
+      animation: float 1.8s infinite ease-in-out;
+    }
 
-@keyframes fade {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    /* 🌱 Edging */
+    .service.edging::after {
+      content: "🌱";
+      position: absolute;
+      right: 8px;
+      bottom: 5px;
+      animation: float 2.3s infinite ease-in-out;
+    }
 
-.card {
-  background: linear-gradient(180deg, #ffffff, #fffaf5);
-  border-radius: 20px;
-  padding: 22px;
-  box-shadow: 0 10px 30px rgba(255, 122, 24, 0.12);
-  margin-bottom: 20px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
+    }
 
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 40px rgba(255, 122, 24, 0.2);
-}
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
 
-.hero h1 {
-  font-size: 40px;
-  line-height: 1.1;
-}
+    button {
+      background: #2e8b57;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-.btn {
-  background: linear-gradient(135deg, #ff7a18, #ffb347);
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(255,122,24,0.4);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
+    button:hover {
+      background: #246b43;
+    }
 
-.btn:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 14px 30px rgba(255,122,24,0.5);
-}
-
-.badge {
-  display: inline-block;
-  background: rgba(255,122,24,0.15);
-  color: #ff7a18;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  margin-right: 6px;
-}
-
-.stars {
-  font-size: 16px;
-  color: #ff7a18;
-  letter-spacing: 2px;
-}
-
+    .range-value {
+      margin-top: 10px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">BCS TutorHub</div>
-  <nav>
-    <button class="active" onclick="showTab('home', this)">Home</button>
-    <button onclick="showTab('browse', this)">Browse Tutors</button>
-    <button onclick="showTab('past', this)">Past Tutoring</button>
-    <button onclick="showTab('become', this)">Become a Tutor</button>
-    <button onclick="showTab('profile', this)">Profile</button>
-  </nav>
-</header>
+<div class="form-card">
 
-<main>
-  <!-- HOME -->
-  <section id="home" class="section active">
-    <div class="card hero">
-      <div>
-        <h1>Find the Right Tutor. Faster.</h1>
-        <p style="color: var(--muted)">
-          Connect with students at Berlin Community School for fast, friendly, peer tutoring.
-        </p>
-        <div class="cta">
-          <button class="btn" onclick="showTab('browse')">Browse Tutors</button>
-          <button class="btn" style="margin-left: 8px" onclick="showTab('become')">Become a Tutor</button>
-        </div>
-      </div>
-      <div class="card">
-        <h3>How It Works</h3>
-        <p style="color: var(--muted)">
-          1. Find a tutor by subject<br>
-          2. Book a session<br>
-          3. Learn better, together
-        </p>
-      </div>
-    </div>
-
-    <div class="grid" style="margin-top: 24px;">
-      <div class="card">
-        <h3>Why Use BCS TutorHub?</h3>
-        <p style="color: var(--muted)">
-          Students learn best from students. Get quick help, flexible scheduling,
-          and support from people who understand your classes.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Community Stats</h3>
-        <p style="color: var(--muted)">
-          👥 42 Active Tutors<br>
-          📚 120 Sessions Completed<br>
-          ⭐ 4.8 Average Rating
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Safe & School-Run</h3>
-        <p style="color: var(--muted)">
-          All tutors are BCS students. Profiles are reviewed and approved by staff.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- BROWSE -->
-  <section id="browse" class="section">
-    <h2>Browse Tutors</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Alex Johnson</h3>
-        <div class="stars">★★★★★</div>
-        <span class="review-count" onclick="openReviews('alex')">3 reviews</span>
-        <br><br>
-        <span class="badge">Math</span>
-        <span class="badge">Physics</span>
-        <p style="color: var(--muted)">Available Mon–Thu</p>
-        <button class="btn">Book Session</button>
-      </div>
-
-      <div class="card">
-        <h3>Sophia Lee</h3>
-        <div class="stars">★★★★☆</div>
-        <span class="review-count" onclick="openReviews('sophia')">2 reviews</span>
-        <br><br>
-        <span class="badge">English</span>
-        <span class="badge">History</span>
-        <p style="color: var(--muted)">Available Weekends</p>
-        <button class="btn">Book Session</button>
-      </div>
-
-      <div class="card">
-        <h3>Michael Rivera</h3>
-        <div class="stars">★★★★★</div>
-        <span class="review-count" onclick="openReviews('michael')">1 review</span>
-        <br><br>
-        <span class="badge">Chemistry</span>
-        <span class="badge">Biology</span>
-        <p style="color: var(--muted)">Available Tue–Fri</p>
-        <button class="btn">Book Session</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- PAST -->
-  <section id="past" class="section">
-    <h2>Past Tutoring</h2>
-    <div class="card">
-      <strong>Math with Alex Johnson</strong>
-      <p style="color: var(--muted)">Completed on Feb 2, 2026</p>
-    </div>
-    <div class="card">
-      <strong>English with Sophia Lee</strong>
-      <p style="color: var(--muted)">Completed on Jan 20, 2026</p>
-    </div>
-  </section>
-
-  <!-- BECOME -->
-  <section id="become" class="section">
-    <h2>Become a Tutor</h2>
-    <div class="card">
-      <input type="text" placeholder="Full Name">
-      <input type="text" placeholder="Subjects you tutor (e.g. Math, Biology)">
-      <textarea rows="4" placeholder="Short bio / experience"></textarea>
-      <button class="btn">Submit Application</button>
-    </div>
-  </section>
-
-  <!-- PROFILE -->
-  <section id="profile" class="section">
-    <h2>Your Profile</h2>
-    <div class="card">
-      <p><strong>Name:</strong> Student Name</p>
-      <p><strong>Role:</strong> Learner</p>
-      <p><strong>Sessions Completed:</strong> 3</p>
-      <button class="btn">Edit Profile</button>
-    </div>
-  </section>
-</main>
-
-<footer>
-  © 2026 BCS TutorHub • Built for Berlin Community School
-</footer>
-
-<!-- REVIEW MODAL -->
-<div id="reviewModal" class="modal" onclick="closeReviews(event)">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeReviews(event)">✕</span>
-    <h3 id="reviewTitle"></h3>
-    <div id="reviewBody"></div>
+  <!-- STEP 1 -->
+  <div class="step active">
+    <h2>👋 What’s your name?</h2>
+    <input type="text" id="name" placeholder="Your name" />
+    <button onclick="nextStep()">Next →</button>
   </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <h2>📍 Where is your property?</h2>
+    <input type="text" id="address" placeholder="Address" />
+    <button onclick="nextStep()">Next →</button>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <h2>🛠 What services do you want?</h2>
+
+    <div class="services">
+      <div class="service mowing" onclick="toggleService(this)">Mowing</div>
+      <div class="service trimming" onclick="toggleService(this)">Trimming</div>
+      <div class="service edging" onclick="toggleService(this)">Edging</div>
+      <div class="service weeding" onclick="toggleService(this)">Weeding</div>
+    </div>
+
+    <button onclick="nextStep()">Next →</button>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <h2>📏 How big is your yard?</h2>
+    <input type="range" min="1" max="10" value="5" id="yardSize" oninput="updateRange()" />
+    <div class="range-value" id="rangeValue">Medium</div>
+    <button onclick="nextStep()">Next →</button>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <h2>🎉 You’re all set!</h2>
+    <p>We’ll contact you soon to confirm your appointment.</p>
+    <button onclick="alert('Form submitted!')">Submit</button>
+  </div>
+
 </div>
 
 <script>
-  function showTab(id, btn) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
+  let currentStep = 0;
+  const steps = document.querySelectorAll(".step");
 
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
+  function nextStep() {
+    steps[currentStep].classList.remove("active");
+    currentStep++;
+    steps[currentStep].classList.add("active");
   }
 
-  const reviews = {
-    alex: {
-      name: "Alex Johnson",
-      items: [
-        { name: "Emily", text: "Explained calculus in a way that finally made sense!" },
-        { name: "Ryan", text: "Really patient and helpful with physics homework." },
-        { name: "Maya", text: "Helped me go from a C to a B+ in math." }
-      ]
-    },
-    sophia: {
-      name: "Sophia Lee",
-      items: [
-        { name: "Jordan", text: "Super helpful with essay structure." },
-        { name: "Ava", text: "Helped me prep for my history test!" }
-      ]
-    },
-    michael: {
-      name: "Michael Rivera",
-      items: [
-        { name: "Chris", text: "Made chemistry way less confusing." }
-      ]
-    }
-  };
-
-  function openReviews(id) {
-    const modal = document.getElementById("reviewModal");
-    const title = document.getElementById("reviewTitle");
-    const body = document.getElementById("reviewBody");
-
-    title.innerText = reviews[id].name + " – Reviews";
-    body.innerHTML = reviews[id].items.map(r => `
-      <div class="review">
-        <strong>${r.name}</strong>
-        <p style="color: var(--muted)">${r.text}</p>
-      </div>
-    `).join("");
-
-    modal.classList.add("active");
+  function toggleService(el) {
+    el.classList.toggle("active");
   }
 
-  function closeReviews(e) {
-    if (e.target.id === "reviewModal" || e.target.classList.contains("close-btn")) {
-      document.getElementById("reviewModal").classList.remove("active");
-    }
+  function updateRange() {
+    const val = document.getElementById("yardSize").value;
+    const label = document.getElementById("rangeValue");
+
+    if (val <= 3) label.textContent = "Small Yard 🌱";
+    else if (val <= 7) label.textContent = "Medium Yard 🌿";
+    else label.textContent = "Large Yard 🌳";
   }
 </script>
 
 </body>
 </html>
-
