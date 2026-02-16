@@ -103,19 +103,16 @@
       box-shadow: 0 18px 40px rgba(255, 122, 24, 0.2);
     }
 
-    .hero h1 {
-      font-size: 40px;
-      line-height: 1.1;
-    }
-
     .btn {
       background: linear-gradient(135deg, #ff7a18, #ffb347);
       color: white;
       border: none;
-      padding: 12px 18px;
-      border-radius: 12px;
+      padding: 14px 20px;
+      border-radius: 14px;
       font-weight: 700;
       cursor: pointer;
+      width: 100%;
+      font-size: 16px;
       box-shadow: 0 8px 20px rgba(255,122,24,0.4);
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
@@ -125,54 +122,86 @@
       box-shadow: 0 14px 30px rgba(255,122,24,0.5);
     }
 
-    .badge {
-      display: inline-block;
-      background: rgba(255,122,24,0.15);
-      color: #ff7a18;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      margin-right: 6px;
-    }
-
-    .stars {
-      font-size: 16px;
-      color: #ff7a18;
-      letter-spacing: 2px;
-    }
-
     /* INTERVIEW FORM STYLES */
     .interview-container {
       position: relative;
       overflow: hidden;
+      padding-top: 20px;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      height: 6px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--orange), var(--peach));
+      border-radius: 10px;
+      transition: width 0.4s ease;
+      box-shadow: 0 0 10px rgba(255,122,24,0.7);
+    }
+
+    .progress-pulse {
+      animation: pulseGlow 0.5s ease;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0px rgba(255,122,24,0.0); }
+      100% { box-shadow: 0 0 12px rgba(255,122,24,0.8); }
     }
 
     .interview-step {
       display: none;
-      animation: fade 0.4s ease;
+      animation: slideIn 0.5s ease, fadeScale 0.5s ease;
     }
 
     .interview-step.active {
       display: block;
     }
 
+    @keyframes slideIn {
+      from { transform: translateX(40px); }
+      to { transform: translateX(0); }
+    }
+
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border-radius: 12px;
+      border: 2px solid #ffd7b0;
+      background: #fff7ef;
+      font-size: 16px;
+      box-shadow: inset 0 0 8px rgba(255,122,24,0.15);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 10px rgba(255,122,24,0.4);
+      outline: none;
+    }
+
     .subject-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 12px;
       margin: 20px 0;
     }
 
     .subject-option {
       background: #fff3e6;
-      padding: 14px;
-      border-radius: 12px;
+      padding: 16px;
+      border-radius: 14px;
       text-align: center;
       cursor: pointer;
       font-weight: 600;
       position: relative;
       transition: transform 0.2s, background 0.2s;
+      overflow: hidden;
     }
 
     .subject-option.selected {
@@ -181,39 +210,17 @@
       transform: scale(1.05);
     }
 
-    /* Science bubbling animation */
-    .science-bubble {
-      width: 10px;
-      height: 10px;
-      background: purple;
-      border-radius: 50%;
-      position: absolute;
-      bottom: 5px;
-      right: 5px;
-      animation: bubble 1.5s infinite ease-in-out;
+    /* Click animations */
+    .animate {
+      animation: clickEffect 0.9s ease;
     }
 
-    @keyframes bubble {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-15px) scale(1.4); opacity: 0; }
+    @keyframes clickEffect {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.15); }
+      100% { transform: scale(1); }
     }
 
-    /* English feather ink animation */
-    .feather-ink {
-      width: 6px;
-      height: 6px;
-      background: black;
-      border-radius: 50%;
-      position: absolute;
-      bottom: 5px;
-      left: 5px;
-      animation: drip 1.2s infinite ease-in-out;
-    }
-
-    @keyframes drip {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(6px); opacity: 0; }
-    }
   </style>
 </head>
 
@@ -234,65 +241,39 @@
 
   <!-- HOME -->
   <section id="home" class="section active">
-    <div class="card hero">
-      <h1>Find the Right Tutor. Faster.</h1>
-      <p style="color: var(--muted)">
-        Connect with students at Berlin Community School for fast, friendly, peer tutoring.
-      </p>
-      <button class="btn" onclick="showTab('browse')">Browse Tutors</button>
-      <button class="btn" style="margin-left: 8px" onclick="showTab('become')">Become a Tutor</button>
-    </div>
-  </section>
-
-  <!-- BROWSE -->
-  <section id="browse" class="section">
-    <h2>Browse Tutors</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Alex Johnson</h3>
-        <div class="stars">★★★★★</div>
-        <span class="badge">Math</span>
-        <span class="badge">Physics</span>
-        <button class="btn">Book Session</button>
-      </div>
-
-      <div class="card">
-        <h3>Sophia Lee</h3>
-        <div class="stars">★★★★☆</div>
-        <span class="badge">English</span>
-        <span class="badge">History</span>
-        <button class="btn">Book Session</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- PAST -->
-  <section id="past" class="section">
-    <h2>Past Tutoring</h2>
     <div class="card">
-      <strong>Math with Alex Johnson</strong>
-      <p style="color: var(--muted)">Completed on Feb 2, 2026</p>
+      <h1>Find the Right Tutor. Faster.</h1>
+      <p style="color: var(--muted)">Connect with students at Berlin Community School.</p>
+      <button class="btn" onclick="showTab('browse')">Browse Tutors</button>
+      <button class="btn" onclick="showTab('become')">Become a Tutor</button>
     </div>
   </section>
 
-  <!-- BECOME (NEW INTERVIEW FORM) -->
+  <!-- BECOME -->
   <section id="become" class="section">
     <h2>Become a Tutor</h2>
 
     <div class="card interview-container">
 
+      <div class="progress-bar" id="progressBar"></div>
+
       <!-- STEP 1 -->
       <div class="interview-step active" id="step1">
-        <h3>First, what's your full name?</h3>
+        <h3>Your full name?</h3>
         <input id="tutorName" type="text" placeholder="Enter your name">
         <button class="btn" onclick="nextStep(1)">Next</button>
       </div>
 
       <!-- STEP 2 -->
       <div class="interview-step" id="step2">
-        <h3>What grade range are you comfortable tutoring?</h3>
-        <label>Grades: <span id="gradeValue">5–8</span></label>
-        <input id="gradeRange" type="range" min="1" max="8" value="8" oninput="updateGrade()">
+        <h3>Grade range you can tutor?</h3>
+
+        <label>Minimum Grade: <span id="minGradeLabel">5</span></label>
+        <input id="minGrade" type="range" min="5" max="8" value="5" oninput="updateGrades()">
+
+        <label>Maximum Grade: <span id="maxGradeLabel">8</span></label>
+        <input id="maxGrade" type="range" min="5" max="8" value="8" oninput="updateGrades()">
+
         <button class="btn" onclick="nextStep(2)">Next</button>
       </div>
 
@@ -302,13 +283,13 @@
 
         <div class="subject-grid">
           <div class="subject-option" onclick="toggleSubject(this, 'Math')">➗ Math</div>
-          <div class="subject-option" onclick="toggleSubject(this, 'Science')">
-            🔬 Science <div class="science-bubble"></div>
-          </div>
-          <div class="subject-option" onclick="toggleSubject(this, 'English')">
-            ✒️ English <div class="feather-ink"></div>
-          </div>
+          <div class="subject-option" onclick="toggleSubject(this, 'Math Advanced')">📘 Math Advanced</div>
+          <div class="subject-option" onclick="toggleSubject(this, 'Science')">🔬 Science</div>
+          <div class="subject-option" onclick="toggleSubject(this, 'English')">✒️ English</div>
           <div class="subject-option" onclick="toggleSubject(this, 'History')">📜 History</div>
+          <div class="subject-option" onclick="toggleSubject(this, 'Health')">❤️ Health</div>
+          <div class="subject-option" onclick="toggleSubject(this, 'Financial Literacy')">💰 Financial Literacy</div>
+          <div class="subject-option" onclick="toggleSubject(this, 'Spanish')">🇪🇸 Spanish</div>
         </div>
 
         <button class="btn" onclick="nextStep(3)">Next</button>
@@ -316,7 +297,7 @@
 
       <!-- STEP 4 -->
       <div class="interview-step" id="step4">
-        <h3>Tell us a little about your experience.</h3>
+        <h3>Your experience?</h3>
         <textarea id="bio" rows="4" placeholder="Short bio..."></textarea>
         <button class="btn" onclick="submitTutor()">Submit Application</button>
       </div>
@@ -330,22 +311,7 @@
     </div>
   </section>
 
-  <!-- PROFILE -->
-  <section id="profile" class="section">
-    <h2>Your Profile</h2>
-    <div class="card">
-      <p><strong>Name:</strong> Student Name</p>
-      <p><strong>Role:</strong> Learner</p>
-      <p><strong>Sessions Completed:</strong> 3</p>
-      <button class="btn">Edit Profile</button>
-    </div>
-  </section>
-
 </main>
-
-<footer>
-  © 2026 BCS TutorHub • Built for Berlin Community School
-</footer>
 
 <script>
   function showTab(id, btn) {
@@ -359,17 +325,40 @@
   /* INTERVIEW LOGIC */
   let selectedSubjects = [];
 
+  function updateProgress(step) {
+    const bar = document.getElementById("progressBar");
+    const widths = {1: 25, 2: 50, 3: 75, 4: 100};
+    bar.style.width = widths[step] + "%";
+
+    bar.classList.remove("progress-pulse");
+    void bar.offsetWidth;
+    bar.classList.add("progress-pulse");
+  }
+
   function nextStep(step) {
     document.getElementById(`step${step}`).classList.remove("active");
     document.getElementById(`step${step + 1}`).classList.add("active");
+    updateProgress(step + 1);
   }
 
-  function updateGrade() {
-    const val = document.getElementById("gradeRange").value;
-    document.getElementById("gradeValue").innerText = `5–${val}`;
+  function updateGrades() {
+    let min = parseInt(document.getElementById("minGrade").value);
+    let max = parseInt(document.getElementById("maxGrade").value);
+
+    if (min > max) min = max;
+    if (max < min) max = min;
+
+    document.getElementById("minGrade").value = min;
+    document.getElementById("maxGrade").value = max;
+
+    document.getElementById("minGradeLabel").innerText = min;
+    document.getElementById("maxGradeLabel").innerText = max;
   }
 
   function toggleSubject(el, subject) {
+    el.classList.add("animate");
+    setTimeout(() => el.classList.remove("animate"), 900);
+
     el.classList.toggle("selected");
 
     if (selectedSubjects.includes(subject)) {
@@ -380,16 +369,6 @@
   }
 
   function submitTutor() {
-    const name = document.getElementById("tutorName").value;
-    const bio = document.getElementById("bio").value;
-
-    console.log("Tutor Application:", {
-      name,
-      gradeRange: document.getElementById("gradeValue").innerText,
-      subjects: selectedSubjects,
-      bio
-    });
-
     nextStep(4);
   }
 </script>
