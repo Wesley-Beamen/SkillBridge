@@ -1,193 +1,398 @@
-<!-- BECOME -->
-<section id="become" class="section">
-  <h2>Become a Tutor</h2>
-  <div class="card interview-card">
-    <div id="interview-container">
-      <div id="question-step"></div>
-      <div id="response-area"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BCS TutorHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    :root {
+      --orange: #ff7a18;
+      --peach: #ffb347;
+      --bg: #fff7f0;
+      --card: #ffffff;
+      --text: #1f2933;
+      --muted: #6b7280;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #fff2e6, #ffffff);
+      color: var(--text);
+    }
+
+    header {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 122, 24, 0.85);
+      padding: 16px 24px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    nav button {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    nav button:hover,
+    nav button.active {
+      background: white;
+      color: #ff7a18;
+      transform: translateY(-1px);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+
+    .section {
+      display: none;
+      animation: fade 0.3s ease-in-out;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: linear-gradient(180deg, #ffffff, #fffaf5);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(255, 122, 24, 0.12);
+      margin-bottom: 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(255, 122, 24, 0.2);
+    }
+
+    .hero h1 {
+      font-size: 40px;
+      line-height: 1.1;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #ff7a18, #ffb347);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255,122,24,0.4);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 14px 30px rgba(255,122,24,0.5);
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255,122,24,0.15);
+      color: #ff7a18;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .stars {
+      font-size: 16px;
+      color: #ff7a18;
+      letter-spacing: 2px;
+    }
+
+    /* INTERVIEW FORM STYLES */
+    .interview-container {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interview-step {
+      display: none;
+      animation: fade 0.4s ease;
+    }
+
+    .interview-step.active {
+      display: block;
+    }
+
+    .subject-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .subject-option {
+      background: #fff3e6;
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      position: relative;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .subject-option.selected {
+      background: #ffb347;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    /* Science bubbling animation */
+    .science-bubble {
+      width: 10px;
+      height: 10px;
+      background: purple;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      animation: bubble 1.5s infinite ease-in-out;
+    }
+
+    @keyframes bubble {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-15px) scale(1.4); opacity: 0; }
+    }
+
+    /* English feather ink animation */
+    .feather-ink {
+      width: 6px;
+      height: 6px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      animation: drip 1.2s infinite ease-in-out;
+    }
+
+    @keyframes drip {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(6px); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">BCS TutorHub</div>
+  <nav>
+    <button class="active" onclick="showTab('home', this)">Home</button>
+    <button onclick="showTab('browse', this)">Browse Tutors</button>
+    <button onclick="showTab('past', this)">Past Tutoring</button>
+    <button onclick="showTab('become', this)">Become a Tutor</button>
+    <button onclick="showTab('profile', this)">Profile</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HOME -->
+  <section id="home" class="section active">
+    <div class="card hero">
+      <h1>Find the Right Tutor. Faster.</h1>
+      <p style="color: var(--muted)">
+        Connect with students at Berlin Community School for fast, friendly, peer tutoring.
+      </p>
+      <button class="btn" onclick="showTab('browse')">Browse Tutors</button>
+      <button class="btn" style="margin-left: 8px" onclick="showTab('become')">Become a Tutor</button>
     </div>
-  </div>
-</section>
-<style>
-  .interview-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .interview-question {
-    font-size: 1.3rem;
-    margin-bottom: 20px;
-    animation: fadeInUp 0.5s ease-out;
-  }
-  .interview-input {
-    padding: 10px 14px;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 2px solid var(--orange);
-    width: 100%;
-    max-width: 300px;
-    margin-bottom: 10px;
-    transition: box-shadow 0.2s ease;
-  }
-  .interview-input:focus {
-    box-shadow: 0 0 10px rgba(255, 122, 24, 0.3);
-  }
-  .slider-value {
-    font-weight: bold;
-    color: var(--orange);
-  }
-  .subject-bubble {
-    display: inline-block;
-    background: rgba(255,122,24,0.1);
-    border: 1px solid var(--orange);
-    border-radius: 999px;
-    padding: 8px 14px;
-    margin: 5px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .subject-bubble.selected {
-    background: var(--orange);
-    color: white;
-    transform: scale(1.1);
-  }
-  .animated-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 0.2;
-    pointer-events: none;
-  }
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .btn-next {
-    background: linear-gradient(135deg, #ff7a18, #ffb347);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 10px 16px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-</style>
+  </section>
+
+  <!-- BROWSE -->
+  <section id="browse" class="section">
+    <h2>Browse Tutors</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Alex Johnson</h3>
+        <div class="stars">★★★★★</div>
+        <span class="badge">Math</span>
+        <span class="badge">Physics</span>
+        <button class="btn">Book Session</button>
+      </div>
+
+      <div class="card">
+        <h3>Sophia Lee</h3>
+        <div class="stars">★★★★☆</div>
+        <span class="badge">English</span>
+        <span class="badge">History</span>
+        <button class="btn">Book Session</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAST -->
+  <section id="past" class="section">
+    <h2>Past Tutoring</h2>
+    <div class="card">
+      <strong>Math with Alex Johnson</strong>
+      <p style="color: var(--muted)">Completed on Feb 2, 2026</p>
+    </div>
+  </section>
+
+  <!-- BECOME (NEW INTERVIEW FORM) -->
+  <section id="become" class="section">
+    <h2>Become a Tutor</h2>
+
+    <div class="card interview-container">
+
+      <!-- STEP 1 -->
+      <div class="interview-step active" id="step1">
+        <h3>First, what's your full name?</h3>
+        <input id="tutorName" type="text" placeholder="Enter your name">
+        <button class="btn" onclick="nextStep(1)">Next</button>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="interview-step" id="step2">
+        <h3>What grade range are you comfortable tutoring?</h3>
+        <label>Grades: <span id="gradeValue">5–8</span></label>
+        <input id="gradeRange" type="range" min="1" max="8" value="8" oninput="updateGrade()">
+        <button class="btn" onclick="nextStep(2)">Next</button>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="interview-step" id="step3">
+        <h3>Which subjects can you tutor?</h3>
+
+        <div class="subject-grid">
+          <div class="subject-option" onclick="toggleSubject(this, 'Math')">➗ Math</div>
+          <div class="subject-option" onclick="toggleSubject(this, 'Science')">
+            🔬 Science <div class="science-bubble"></div>
+          </div>
+          <div class="subject-option" onclick="toggleSubject(this, 'English')">
+            ✒️ English <div class="feather-ink"></div>
+          </div>
+          <div class="subject-option" onclick="toggleSubject(this, 'History')">📜 History</div>
+        </div>
+
+        <button class="btn" onclick="nextStep(3)">Next</button>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="interview-step" id="step4">
+        <h3>Tell us a little about your experience.</h3>
+        <textarea id="bio" rows="4" placeholder="Short bio..."></textarea>
+        <button class="btn" onclick="submitTutor()">Submit Application</button>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="interview-step" id="step5">
+        <h3>🎉 Application Submitted!</h3>
+        <p>Thanks for applying to be a tutor at BCS TutorHub.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROFILE -->
+  <section id="profile" class="section">
+    <h2>Your Profile</h2>
+    <div class="card">
+      <p><strong>Name:</strong> Student Name</p>
+      <p><strong>Role:</strong> Learner</p>
+      <p><strong>Sessions Completed:</strong> 3</p>
+      <button class="btn">Edit Profile</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 BCS TutorHub • Built for Berlin Community School
+</footer>
+
 <script>
-  // --- Animated conversational form flow ---
-  const steps = [
-    {
-      question: "Hi there! What’s your full name?",
-      type: "text",
-      placeholder: "Enter your full name",
-      key: "name"
-    },
-    {
-      question: "Awesome, nice to meet you! What grade range would you like to tutor?",
-      type: "slider",
-      min: 1,
-      max: 8,
-      key: "gradeRange"
-    },
-    {
-      question: "Which subjects can you tutor?",
-      type: "multi-select",
-      options: ["Math", "Science", "English", "History", "Spanish", "Art"],
-      key: "subjects"
-    },
-    {
-      question: "Tell us a little about your experience or why you’d be a great tutor:",
-      type: "textarea",
-      placeholder: "Write a short bio...",
-      key: "bio"
-    },
-    {
-      question: "All done! Ready to submit your application?",
-      type: "submit"
-    }
-  ];
-  let stepIndex = 0;
-  const formData = {};
-  const questionEl = document.getElementById("question-step");
-  const responseEl = document.getElementById("response-area");
-  function loadStep() {
-    const step = steps[stepIndex];
-    questionEl.innerHTML = `<div class="interview-question">${step.question}</div>`;
-    responseEl.innerHTML = "";
-    document.querySelectorAll(".animated-bg").forEach(e => e.remove());
-    if (step.type === "text") {
-      responseEl.innerHTML = `
-        <input class="interview-input" type="text" placeholder="${step.placeholder}" id="respValue">
-        <button class="btn-next" onclick="nextStep()">Next</button>
-      `;
-    } else if (step.type === "slider") {
-      responseEl.innerHTML = `
-        <input type="range" id="respSlider" min="${step.min}" max="${step.max}" value="4"
-          class="interview-input">
-        <div>Grade: <span class="slider-value" id="gradeDisplay">4</span></div>
-        <button class="btn-next" onclick="nextStep()">Next</button>
-      `;
-      document.getElementById("respSlider").addEventListener("input", e => {
-        document.getElementById("gradeDisplay").textContent = e.target.value;
-      });
-    } else if (step.type === "multi-select") {
-      step.options.forEach(sub => {
-        const div = document.createElement("div");
-        div.textContent = sub;
-        div.classList.add("subject-bubble");
-        div.onclick = () => {
-          div.classList.toggle("selected");
-          animateSubject(sub);
-        };
-        responseEl.appendChild(div);
-      });
-      responseEl.innerHTML += `<br><button class="btn-next" onclick="nextStep()">Next</button>`;
-    } else if (step.type === "textarea") {
-      responseEl.innerHTML = `
-        <textarea class="interview-input" rows="4" id="respValue" placeholder="${step.placeholder}"></textarea>
-        <button class="btn-next" onclick="nextStep()">Submit</button>
-      `;
-    } else if (step.type === "submit") {
-      responseEl.innerHTML = `<button class="btn-next" onclick="submitInterview()">Submit Application</button>`;
+  function showTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+
+  /* INTERVIEW LOGIC */
+  let selectedSubjects = [];
+
+  function nextStep(step) {
+    document.getElementById(`step${step}`).classList.remove("active");
+    document.getElementById(`step${step + 1}`).classList.add("active");
+  }
+
+  function updateGrade() {
+    const val = document.getElementById("gradeRange").value;
+    document.getElementById("gradeValue").innerText = `5–${val}`;
+  }
+
+  function toggleSubject(el, subject) {
+    el.classList.toggle("selected");
+
+    if (selectedSubjects.includes(subject)) {
+      selectedSubjects = selectedSubjects.filter(s => s !== subject);
+    } else {
+      selectedSubjects.push(subject);
     }
   }
-  function nextStep() {
-    const step = steps[stepIndex];
-    if (step.type === "text" || step.type === "textarea") {
-      formData[step.key] = document.getElementById("respValue").value.trim();
-    } else if (step.type === "slider") {
-      formData[step.key] = document.getElementById("respSlider").value;
-    } else if (step.type === "multi-select") {
-      formData[step.key] = Array.from(document.querySelectorAll(".subject-bubble.selected")).map(
-        el => el.textContent
-      );
-    }
-    if (stepIndex < steps.length - 1) {
-      stepIndex++;
-      loadStep();
-    }
+
+  function submitTutor() {
+    const name = document.getElementById("tutorName").value;
+    const bio = document.getElementById("bio").value;
+
+    console.log("Tutor Application:", {
+      name,
+      gradeRange: document.getElementById("gradeValue").innerText,
+      subjects: selectedSubjects,
+      bio
+    });
+
+    nextStep(4);
   }
-  function animateSubject(subject) {
-    const bg = document.createElement("div");
-    bg.classList.add("animated-bg");
-    if (subject === "Science") {
-      bg.style.background = "radial-gradient(circle, rgba(180,0,255,0.3) 10%, transparent 70%)";
-      bg.style.animation = "none";
-    } else if (subject === "English") {
-      bg.style.background = "url('https://upload.wikimedia.org/wikipedia/commons/d/d2/Ink_pen_drawing.svg')";
-      bg.style.backgroundSize = "contain";
-      bg.style.backgroundRepeat = "no-repeat";
-      bg.style.backgroundPosition = "center";
-    } else if (subject === "Math") {
-      bg.style.background = "repeating-linear-gradient(45deg, rgba(255,122,24,0.1), rgba(255,122,24,0.2) 10px)";
-    }
-    document.querySelector(".interview-card").appendChild(bg);
-  }
-  function submitInterview() {
-    questionEl.innerHTML = `<div class="interview-question">Thank you, ${formData.name || "Tutor"}! 🎉</div>`;
-    responseEl.innerHTML = `<p style="color: var(--muted)">Your application has been received. We'll review it soon!</p>`;
-  }
-  loadStep();
 </script>
+
+</body>
+</html>
